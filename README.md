@@ -21,4 +21,3 @@
 - ANGULAR FOR BEGINNERS: https://www.udemy.com/angularjs-for-beginners-udemy/
 
 
-
