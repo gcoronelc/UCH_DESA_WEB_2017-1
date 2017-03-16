@@ -1,0 +1,36 @@
+    <html>
+    <head>
+    
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <script language='javascript'>
+    function factorial(){
+      var factorial=document.f1.num.value;
+	  var n=1;
+      for (var i = 1; i <= factorial; i++) {
+    	n*=i;
+      }
+      return alert("El factorial es " + n);
+    }
+    </script>
+    </head>
+    <body>
+    <form class="form" name='f1' action="resultado.html" method=POST>
+    
+    <table>
+    <tr>
+    <td>
+    <label class="etiqueta" name=lblnum1>Ingrese el N :</label>
+    <input  class="caja" type=text name='num'/>
+   </td>
+    </tr>
+     
+     <tr>
+    <td>
+    <input class="input" type=button value="PROCESAR" onclick="factorial()">
+     </td>
+     </tr>
+   
+    </form>
+     </table>
+    </body>
+    </html>

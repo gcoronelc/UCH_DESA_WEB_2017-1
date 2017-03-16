@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>SUMA</title>
+</head>
+
+<body>
+	<h1>SUMA</h1>
+	<div id="divForm">
+		<h2>Datos</h2>
+		<p>Número 1:<input type="text" id="n1"/></p>
+		<p>Número 2:<input type="text" id="n2"/></p>
+		<p><input type="button" value="Procesar"
+			onclick="fnProcesar()"/></p>
+	</div>
+
+	<div id="divRepo" style="display:none;">
+		<h2>Reporte</h2>
+		<p>Número 1: <span id="rn1"></span></p>
+		<p>Número 2: <span id="rn2"></span></p>
+		<p>Suma: <span id="suma"></span></p>
+		<p><input type="button" value="Retornar"/></p>
+	</div>
+	
+</body>
+<script src="suma.js"></script>
+<script src="mate.js"></script>
+<script src="herramientas.js"></script>
+</html>

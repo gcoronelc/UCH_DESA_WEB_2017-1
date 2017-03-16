@@ -1,11 +1,34 @@
-1.  ReactJS
+﻿1.  ReactJS
+    Leon y Vargas
+	
 2.  Polymer
+    Lipa y Trinidad
+	
 3.  Meteor.js
+    Canales
+
 4.  Moment.js
+
+
 5.  BackBone.js
+
 6.  Video.js
+	Ordoñez y Calle
+	
 7.  Vue.js
+	
+
 8.  Ember
+
+
 9.  Knockout
+
+
+
 10. kendo-ui
+
+
+11. JQuery UI
+
+
 
