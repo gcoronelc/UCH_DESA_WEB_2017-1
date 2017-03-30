@@ -1,0 +1,23 @@
+<script>
+function procesarCuotas(capital, interes, meses)
+{
+	var cuotaFija = parseFloat(capital / meses);
+	var interesCuota;
+	var total;
+	var repo = [];
+	for (var i = 0; i < meses; i++)
+	{
+		interesCuota = parseFloat(capital * interes / 100);
+		total = cuotaFija + interesCuota;
+		var fila = [cuotaFija,interesCuota,total];
+		repo[i] = fila;
+		capital -= cuotaFija;
+	}
+	return repo;
+}
+
+var repo = procesarCuotas(1000, 10, 10);
+
+console.log(repo);
+
+</script>

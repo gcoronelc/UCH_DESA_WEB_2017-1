@@ -1,0 +1,16 @@
+<head>
+<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+Podemos referenciar elementos o etiquetas tales como <b>p, h1, a </b> para lo cual solo debemos <b>indicar el elemento</b> en la sintaxis <b>$("elemento")</b>
+<br>
+<a href="#">Resaltar</a>
+</body>
+<script type="text/javascript">
+x=$("a").mouseover(resaltar);
+function resaltar() {
+x=$("b");
+x.css("background-color","#00FF00");
+x.css("font-size","24");
+}
+</script>

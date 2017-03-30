@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="jquery-3.2.0.min.js"></script>
+</head>
+<body>
+	<div style="margin: auto; width: 300px;">
+		<div id="rojo" style="background-color: #f00; width: 100px; float: left; height: 100px; cursor: pointer;"></div>
+		<div id="azul" style="background-color: #00f; width: 100px; float: right; height: 100px; cursor: pointer"></div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+$("#rojo, #azul").click(function(){
+	alert('El color seleccionado es ' 
+	+ $(this).attr('id'));
+});
+</script>

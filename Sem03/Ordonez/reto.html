@@ -1,0 +1,34 @@
+
+<html>
+<head>
+	<title>Reto Coronel</title>
+</head>
+<body BGCOLOR="#81F7F3">
+	<div id="form">
+		<table border="1" cellpadding="0" cellspacing="0" width="50%" align="center">
+			<tr >
+				<td width="50%" bgcolor="#81DAF5">Capital:</td>
+				<td width="50%" bgcolor="#1C1C1C"><input type="text" id="capital"></td>
+			</tr>
+			<tr >
+				<td width="50%" bgcolor="#81DAF5">Interes %:</td>
+				<td width="50%" bgcolor="#1C1C1C"><input type="text" id="interes"></td>
+			</tr>
+			<tr >
+				<td width="50%" bgcolor="#81DAF5">Meses:</td>
+				<td width="50%" bgcolor="#1C1C1C"><input type="text" id="meses"></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button style="background-color: #00BFFF" 
+					onclick="procesarCuotas(capital.value, interes.value, meses.value)">
+					Procesar</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div align="center" id="resultado" 
+	style="display: none;"></div>
+</body>
+<script src="libreriareto.js"></script>
+</html>

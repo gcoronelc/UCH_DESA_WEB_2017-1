@@ -5,24 +5,24 @@
     Lipa y Trinidad
 	
 3.  Meteor.js
-    Canales
+    Canales y Arroyo
 
 4.  Moment.js
 
 
 5.  BackBone.js
+    Villanque, Palomo y Sanchez
 
 6.  Video.js
 	Ordoñez y Calle
 	
 7.  Vue.js
-	
+	Zapata y Galarreta
 
 8.  Ember
 
 
 9.  Knockout
-
 
 
 10. kendo-ui
