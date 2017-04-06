@@ -1,4 +1,4 @@
-![DESARROLLO WEB](https://raw.githubusercontent.com/gcoronelc/UCH_DES_WEB_2017-1/master/logo.png)
+﻿![DESARROLLO WEB](https://raw.githubusercontent.com/gcoronelc/UCH_DES_WEB_2017-1/master/logo.png)
 
 # DESARROLLO WEB
 
@@ -39,6 +39,7 @@
 - Entrevista: http://blog.soreygarcia.me/2014/03/modelos-y-arquitectura-de-software.html
 - Blog: http://blog.soreygarcia.me/
 - Slideshare: https://www.slideshare.net/soreygarcia
+
 
 
 
