@@ -4,31 +4,44 @@ function procesarCuotas(capital, interes, meses)
 	var repo = calcularCuotas(capital,interes,meses);
 	var cuerpoTabla = document.getElementById("cuerpoTabla");
 	
-	//cuerpoTabla.empty();
+	// Limpiar cuerpo de tabla
+	while (cuerpoTabla.hasChildNodes()){
+		cuerpoTabla.removeChild(cuerpoTabla.firstChild);
+	}
 	
+	// Cargar datos a tabla
 	for (var i = 0; i < meses; i++)
 	{
+		// Construir fila de tabla
+		var rowTabla = cuerpoTabla.insertRow(cuerpoTabla.rows.length);
+  		var cellMes = rowTabla.insertCell(0);
+  		var cellCapital = rowTabla.insertCell(1);
+  		var cellInteres = rowTabla.insertCell(2);
+		var cellTotal = rowTabla.insertCell(3);
+		// Datos
 		var rowData = repo[i];
-		var rowHtml = "<tr><td>" + (i+1) + "</td>";
-		for(var j = 0; j < 3; j++)
-		{
-		  rowHtml = rowHtml + "<td>" + rowData[j] + "</td>";
-		}
-		rowHtml = rowHtml + "</tr>"
-		cuerpoTabla.appendChild(rowHtml);
+		cellMes.innerHTML = (i + 1);
+		cellCapital.innerHTML = rowData[0];
+		cellInteres.innerHTML = rowData[1];
+		cellTotal.innerHTML = rowData[2];
+
 	}
+	
 }
 	
 function calcularCuotas(capital, interes, meses)
 {	
-	var cuotaFija = parseFloat(capital / meses);
+	var cuotaFija = to2Dec(parseFloat(capital / meses));
 	var interesCuota;
 	var total;
 	var repo = [];
 	for (var i = 0; i < meses; i++)
 	{
-		interesCuota = parseFloat(capital * interes / 100);
-		total = cuotaFija + interesCuota;
+		if(i == (meses-1)){
+			cuotaFija = to2Dec(capital);
+		}
+		interesCuota = to2Dec( parseFloat(capital * interes / 100) );
+		total = to2Dec( cuotaFija + interesCuota );
 		var fila = [cuotaFija,interesCuota,total];
 		repo[i] = fila;
 		capital -= cuotaFija;
@@ -44,4 +57,8 @@ function resetView()
 	document.getElementById("interes").value = "";
 	document.getElementById("meses").value = "";
 	document.getElementById("capital").focus();
+}
+
+function to2Dec(num){
+	return Math.round(num * 100) / 100;
 }
