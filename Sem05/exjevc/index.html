@@ -90,6 +90,24 @@
 <script type="text/javascript">
 function iniciarProceso()
 {
+
+    /*
+	var form_data = $("#form_pago").serializeArray();
+	var data = unSerialize(form_data);
+	
+	console.log(form_data);
+	$.each( form_data, function( i, obj ) {
+      console.log( obj.name + " = " + obj.value );
+    });
+
+
+	console.log(data);
+	console.log("horas_diarias: " + data.horas_diarias);
+	console.log("cantidad_dias: " + data.cantidad_dias);
+	console.log("pago_por_hora: " + data.pago_por_hora);
+	console.log("hijos_menores_edad: " + data.hijos_menores_edad);
+	*/
+
 	var form_data = $("#form_pago").serializeArray();
 	var data = unSerialize(form_data);
 	var resultado = procesarData(data);
@@ -104,5 +122,6 @@ function iniciarProceso()
 	$("#sp_neto").text(resultado.neto.toFixed(2));
 
 	$("#div_resultado").show().dialog();
+
 }
 </script>
