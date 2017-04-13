@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VIA EXITOS</title>
+	<link rel="stylesheet" type="text/css" href="libs/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
+	<script src="libs/jquery-3.2.0.min.js"></script>
+	<script src="libs/jquery-ui/jquery-ui.min.js"></script>
+	<script src="services/service.js"></script>
+</head>
+<body>
+	<h3 class="text-center">Ingrese datos</h3>
+	<form id="form_pago" class="form-horizontal col-md-4 col-md-offset-4">
+		<div class="form-group">
+			<label for="horas_diarias" class="col-sm-6 control-label">Horas diarias:</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="horas_diarias" name="horas_diarias">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="cantidad_dias" class="col-sm-6 control-label">D&iacute;as Trabajados:</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="cantidad_dias" name="cantidad_dias">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="pago_por_hora" class="col-sm-6 control-label">Pago por hora:</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="pago_por_hora" name="pago_por_hora">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="hijos_menores_edad" class="col-sm-6 control-label">Cantidad de hijos menores:</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="hijos_menores_edad" name="hijos_menores_edad">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-6 control-label"></label>
+			<div class="col-sm-6">
+				<button type="button" class="btn btn-primary" onclick="iniciarProceso()">Procesar</button>
+			</div>
+		</div>
+	</form>
+	<div id="div_resultado" style="display: none; padding: 0 20px;">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th colspan="2">Resultados</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="width: 50%;">Horas Trabajadas</td>
+					<td><span class="pull-right" id="sp_horas_trabajadas"></span></td>
+				</tr>
+				<tr>
+					<td>Pago por Horas</td>
+					<td><span class="pull-right" id="sp_pago_por_horas"></span></td>
+				</tr>
+				<tr>
+					<td>Sueldo</td>
+					<td><span class="pull-right" id="sp_sueldo"></span></td>
+				</tr>
+				<tr>
+					<td>Asignaci&oacute;n</td>
+					<td><span class="pull-right" id="sp_asignacion"></span></td>
+				</tr>
+				<tr>
+					<td>Bono</td>
+					<td><span class="pull-right" id="sp_bono"></span></td>
+				</tr>
+				<tr>
+					<td>Ingresos</td>
+					<td><span class="pull-right" id="sp_ingresos"></span></td>
+				</tr>
+				<tr>
+					<td>Renta</td>
+					<td><span class="pull-right" id="sp_renta"></span></td>
+				</tr>
+				<tr>
+					<td>Neto</td>
+					<td><span class="pull-right" id="sp_neto"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+function iniciarProceso()
+{
+	var form_data = $("#form_pago").serializeArray();
+	var data = unSerialize(form_data);
+	var resultado = procesarData(data);
+	
+	$("#sp_horas_trabajadas").text(resultado.total_horas.toFixed(2));
+	$("#sp_pago_por_horas").text(resultado.pago_por_hora.toFixed(2));
+	$("#sp_sueldo").text(resultado.sueldo_total.toFixed(2));
+	$("#sp_asignacion").text(resultado.asignacion.toFixed(2));
+	$("#sp_bono").text(resultado.bono.toFixed(2));
+	$("#sp_ingresos").text(resultado.ingresos.toFixed(2));
+	$("#sp_renta").text(resultado.renta.toFixed(2));
+	$("#sp_neto").text(resultado.neto.toFixed(2));
+
+	$("#div_resultado").show().dialog();
+}
+</script>
