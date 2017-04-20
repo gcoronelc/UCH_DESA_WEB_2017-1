@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>Adivina el número</title>
+</head>
+<body ng-app="appConsumo">
+ <div ng-controller="appController">
+
+	 <h3>CALCULO CONSUMO DE AGUA</h3>
+
+	 <label>Lectura 1:</label>
+	 <input type"number" ng-model="lectura1"/><br/>
+
+	 <label>Lectura 2:</label>
+	 <input type"number" ng-model="lectura2"/>
+
+	 <button ng-click="procesar()">Procesar</button>
+
+	 <p>
+	 <p>Consumo: {{consumo}}</p>
+	 <p>Importe: {{importe}}</p>
+	 </p>
+ </div>
+
+ <script src="angular.min.js"></script>
+ <script>
+ var app = angular.module('appConsumo',[]);
+ app.controller('appController', function($scope){
+
+	 $scope.inicializar = function(){
+		 $scope.lectura1 = 0;
+		 $scope.lectura2 = 0;
+		 $scope.consumo = 0;
+		 $scope.importe = 0;
+ 	 }
+
+	 $scope.procesar = function(){
+	 	$scope.consumo = $scope.lectura2 - $scope.lectura1;
+	 	$scope.importe = 0;
+
+	 	var aConsumo = [2000,1000,1000,1000,50000];
+	 	var aCosto = [0.016,0.020,0.025,0.030,0.050];
+
+	 	var auxConsumo = $scope.consumo;
+
+	 	for (i = 0; i < aConsumo.length; i++) { 
+		    if(auxConsumo >= aConsumo[i]){
+		    	$scope.importe += (aConsumo[i] * aCosto[i]);
+		    }
+		    if(auxConsumo < aConsumo[i]){
+		    	$scope.importe += (auxConsumo * aCosto[i]);
+		    }
+		    auxConsumo -= aConsumo[i];
+		    if(auxConsumo <= 0.0){
+		    	break;
+		    }
+		}
+
+	 }
+
+ 	 $scope.inicializar();
+ 	 
+ })
+ </script>
+</body>
+</html>

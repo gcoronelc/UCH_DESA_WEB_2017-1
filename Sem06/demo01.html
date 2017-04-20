@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>DEMO 01</title>
+ <script src="angular.min.js"></script>
+ <style type="text/css">
+ div{
+	 padding: 20px;
+	 background-color: #212F3D;
+	 color: #D1F2EB;
+ }
+ </style>
+</head>
+<body ng-app="miApp" >
+
+ <div ng-controller="miCtrl">
+ 	
+ 	<h1>{{ mensaje }}</h1>
+
+ </div>
+
+ <h2>{{ mensaje }}</h2>
+
+ <script>
+ 
+ var app = angular.module('miApp', []);
+ 
+ app.controller('miCtrl', function($scope) {
+
+	 $scope.mensaje = 'Mensaje desde el controlador';
+ 
+ });
+
+ </script>
+</body>
+</html>

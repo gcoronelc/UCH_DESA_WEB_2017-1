@@ -1,0 +1,11 @@
+RETO  01
+==============================
+Desarrollar una aplicación con 
+AngularJS, que permita ingresar
+dos números enteros, y muestre 
+el MCD y MCM de ambos números.
+
+
+
+
+

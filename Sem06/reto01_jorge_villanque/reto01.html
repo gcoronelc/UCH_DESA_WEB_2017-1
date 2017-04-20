@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="angular.min.js"></script>
+	<style type="text/css">
+		div{
+			padding: 20px;
+			background-color: #212F3D;
+			color: #D1F2EB;
+		}
+	</style>
+</head>
+<body ng-app="miApp" >
+	<div ng-controller="opsController">
+ 		n1: <input type="text" ng-model="n1"/><br/>
+ 		n2: <input type="text" ng-model="n2"/><br/>
+ 		<button ng-click="fnMcd()">Procesar</button>
+ 	<br/>
+ 	El MCD es: {{ mcd }}
+ 	<br>
+ </div>
+
+</body>
+</html>
+<script>
+	var app = angular.module('miApp', []);
+	app.controller( 'opsController', opsController );
+	function opsController($scope)
+	{
+		$scope.n1 = 0;
+		$scope.n2 = 0;
+		$scope.mcd = 0;
+		$scope.fnMcd = function()
+		{
+			var a = parseInt($scope.n1);
+			var b = parseInt($scope.n2);
+
+			while(a != b)
+			{
+				if(a > b)
+					a = a - b;
+				else
+					b = b - a;
+			}
+
+			$scope.mcd = a;
+		}
+ 	}
+</script>

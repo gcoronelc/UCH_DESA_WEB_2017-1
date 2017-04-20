@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <title>Adivina el número</title>
+</head>
+<body ng-app="adivinarNumero">
+ <div ng-controller="AdivinarNumeroController">
+	 <h3>Adivina un numero entre 1 y 100!</h3>
+	 <p>Intentos: {{intentos}}</p>
+
+	 <input type"number" ng-model="numeroUsuario"/>
+	 <button ng-click="verificar()">Verificar</button>
+	 <button ng-click="inicializar()">Comenzar de nuevo</button>
+
+	 <p>
+	 <p ng-show="diferencia < 0">Muy Alto</p>
+	 <p ng-show="diferencia > 0">Muy Bajo</p>
+	 <p ng-show="diferencia == 0">Perfecto!</p>
+	 </p>
+ </div>
+
+ <script src="angular.min.js"></script>
+ <script>
+ angular.module('adivinarNumero',[])
+ .controller('AdivinarNumeroController', function($scope){
+
+	 $scope.inicializar = function(){
+		 $scope.intentos = 0;
+		 $scope.numeroUsuario = null;
+		 $scope.diferencia = null;
+		 $scope.numeroSecreto = Math.floor((100 * Math.random()) + 1);
+ 	 }
+
+	 $scope.verificar = function(){
+	 	$scope.intentos += 1;
+	 	$scope.diferencia = $scope.numeroSecreto - $scope.numeroUsuario;
+	 }
+
+ 	 $scope.inicializar();
+ 	 
+ })
+ </script>
+</body>
+</html>
