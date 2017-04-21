@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Proyecto 3</title>
+	<script src="angular.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body ng-app="appConsumo">
+	<div ng-controller="appController" class="container">
+		<h3>Proyecto N&deg; 3</h3>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Carrito de Productos y C&aacute;lculos</div>
+					<div class="panel-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="categoria" class="col-sm-3 control-label">Categor&iacute;a</label>
+								<div class="col-sm-9">
+									<select ng-model="categoria" id="categoria" class="form-control">
+										<option value="">Seleccione</option>
+										<option value="Deporte">Deporte</option>
+										<option value="Linea Blanca">Linea Blanca</option>
+										<option value="Muebles">Muebles</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="nombre" class="col-sm-3 control-label">Nombre</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="nombre" id="nombre" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="precio" class="col-sm-3 control-label">Precio</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="precio" id="precio" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="stock" class="col-sm-3 control-label">Stock</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="stock" id="stock" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button ng-click="fnAgregar()" class="btn btn-success">Agregar</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="panel-footer" ng-show="fullData.length > 0">
+						<p>Resultados:</p>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Categoria</th>
+									<th>Stock</th>
+									<th>Precio Promedio</th>
+									<th>Valorizado</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="fila in fullData">
+									<td>{{fila.categoria}}</td>
+									<td>{{fila.sumStock}}</td>
+									<td>{{fila.avgPrecio.toFixed(2)}}</td>
+									<td>{{fila.sumPrecio.toFixed(2)}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var app = angular.module('appConsumo', []);
+	app.controller( 'appController', appController );
+	
+	function appController($scope)
+	{
+		$scope.categoria	= '';
+		$scope.nombre		= '';
+		$scope.precio		= '';
+		$scope.stock		= '';
+		$scope.productos	= [];
+		$scope.fullData		= [];
+
+		$scope.fnAgregar = function()
+		{
+			var producto = {
+				categoria	: $scope.categoria,
+				nombre		: $scope.nombre,
+				precio		: parseFloat($scope.precio),
+				stock		: parseInt($scope.stock)
+			};
+
+			$scope.productos.push(producto);
+			$scope.fnRefreshData(producto);
+		}
+
+		$scope.fnRefreshData = function(producto)
+		{
+			var filaActual;
+
+			for (var i = 0; i < $scope.fullData.length; i++)
+			{
+				if($scope.fullData[i].categoria == producto.categoria)
+				{
+					filaActual = $scope.fullData[i];
+					break;
+				}
+			}
+
+			if (!filaActual)
+			{
+				$scope.fullData.push({
+					categoria	: producto.categoria,
+					sumStock	: producto.stock,
+					avgPrecio	: producto.precio,
+					sumPrecio	: producto.precio * producto.stock
+				});
+			}
+			else
+			{
+				filaActual.sumStock		+= producto.stock;
+				filaActual.sumPrecio	+= producto.precio * producto.stock;
+				filaActual.avgPrecio	= parseFloat(filaActual.sumPrecio / filaActual.sumStock);
+			}
+		}
+	}
+</script>
