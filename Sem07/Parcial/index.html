@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+	<title>Proyecto 03</title>
+	<script src="angular.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body ng-app="appConsumo">
+	<div ng-controller="appController" class="container">
+		<h3>EXAMEN PARCIAL</h3>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Carrito de Productos y C&aacute;lculos</div>
+					<div class="panel-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="categoria" class="col-sm-3 control-label">Categor&iacute;a</label>
+								<div class="col-sm-9">
+									<select ng-model="categoria" id="categoria" class="form-control">
+										<option value="">Seleccione</option>
+										<option ng-repeat="cate in categorias" value="{{cate}}">{{cate}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="nombre" class="col-sm-3 control-label">Curso</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="curso" id="curso" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="precio" class="col-sm-3 control-label">Participantes</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="cantidad" id="cantidad" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button ng-click="fnAgregar()" class="btn btn-success">Agregar</button>
+									<button ng-click="fnListado()" class="btn">Listado</button>
+									<button ng-click="fnResumen()" class="btn">Resumen</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel-footer" ng-show="ventas.length > 0 && verPanel == 1">
+				<h2>LISTADO DE VENTAS</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>CATEGORIA</th>
+							<th>CURSO</th>
+							<th>PRECIO</th>
+							<th>CANTIDAD</th>
+							<th>IMPORTE</th>
+							<th>IMPUESTO</th>
+							<th>TOTAL</th>
+							<th>COMISION</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="fila in ventas">
+							<td>{{fila.categoria}}</td>
+							<td>{{fila.curso}}</td>
+							<td>{{fila.precio.toFixed(2)}}</td>
+							<td>{{fila.cantidad}}</td>
+							<td>{{fila.importe.toFixed(2)}}</td>
+							<td>{{fila.impuesto.toFixed(2)}}</td>
+							<td>{{fila.total.toFixed(2)}}</td>
+							<td>{{fila.comision.toFixed(2)}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-footer" ng-show="resumen.length > 0 && verPanel == 2">
+				<h2>RESUMEN DE PRODUCTOS</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>CATEGORIA</th>
+							<th>CANTIDAD</th>
+							<th>IMPORTE</th>
+							<th>IMPUESTO</th>
+							<th>TOTAL</th>
+							<th>COMISION</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="fila in resumen">
+							<td>{{fila.categoria}}</td>
+							<td>{{fila.cantidad}}</td>
+							<td>{{fila.importe.toFixed(2)}}</td>
+							<td>{{fila.impuesto.toFixed(2)}}</td>
+							<td>{{fila.total.toFixed(2)}}</td>
+							<td>{{fila.comision.toFixed(2)}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>	
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+
+	var app = angular.module('appConsumo', []);
+	app.controller( 'appController', appController );
+	
+	function appController($scope)
+	{
+
+		// Datos del modelo
+		$scope.categorias = ["Programacion","Ofimatica","Administracion","Otros"];
+		$scope.verPanel   = 0;
+		$scope.categoria  = '';
+		$scope.curso	    = '';
+		$scope.cantidad   = '0';
+		$scope.ventas     = [];
+		$scope.resumen	  = [];
+
+
+    	// Servicios
+
+		$scope.fnAgregar = function()
+		{
+
+			var venta = fnProcesar($scope.categoria, $scope.curso, parseInt($scope.cantidad));
+
+			$scope.ventas.push(venta);
+			$scope.fnUpdateResumen(venta);
+
+			$scope.categoria = '';
+			$scope.curso	 = '';
+			$scope.cantidad		 = '0';
+		}
+
+		$scope.fnListado = function()
+		{
+			 $scope.verPanel = ($scope.verPanel == 1)?0:1;
+		}
+
+		$scope.fnResumen = function()
+		{
+			$scope.verPanel = ($scope.verPanel == 2)?0:2;
+		}
+
+		$scope.fnUpdateResumen = function(venta)
+		{
+			var filaActual;
+			// Busca la fila con la categoria de la venta actual
+			for (var i = 0; i < $scope.resumen.length; i++)
+			{
+				if($scope.resumen[i].categoria == venta.categoria)
+				{
+					filaActual = $scope.resumen[i];
+					break;
+				}
+			}
+
+			if (!filaActual) { // Si la fila resumen es nueva
+				$scope.resumen.push({
+					categoria	: venta.categoria,
+					cantidad	: venta.cantidad,
+					importe 	: venta.importe,
+					impuesto	: venta.impuesto,
+					total     : venta.total,
+					comision  : venta.comision
+				});
+			} else { // Actualiza la fila resumen
+				filaActual.cantidad		+= venta.cantidad;
+				filaActual.importe	  += venta.importe;
+				filaActual.impuesto 	+= venta.impuesto;
+				filaActual.total    	+= venta.total;
+				filaActual.comision 	+= venta.comision;
+			}
+		}
+
+		function fnProcesar(categoria, curso, cantidad){
+			// Proceso
+			var precio = fnPrecio(categoria); 
+			var ganancia = fnGanancia(categoria, cantidad);
+			var total = precio * cantidad;
+			var importe = total / 1.18;
+			var impuesto = total - importe;
+			var comision = importe * ganancia;
+			// Reporte
+			var venta = {
+				categoria	: categoria,
+				curso		  : curso,
+				cantidad	: cantidad,
+				precio    : precio,
+				ganancia	: ganancia,
+				total     : total,
+				importe   : importe,
+				impuesto  : impuesto,
+				comision  : comision
+			};
+			return venta;
+		}
+
+		function fnPrecio(categoria){
+			var precio = 0.0;
+			if(categoria=='Programacion'){
+				precio = 800.0;
+			} else if(categoria=='Ofimatica'){
+				precio = 500.00;
+			} else if(categoria=='Administracion'){
+				precio = 1800.00;
+			} else if(categoria=='Otros'){
+				precio = 1000.00;
+			}
+			return precio;
+		}
+
+		function fnGanancia(categoria, cantidad){
+			var ganancia = 0.0;
+			if(categoria=='Programacion'){
+				ganancia = (cantidad>12)?0.07:0.05;
+			} else if(categoria=='Ofimatica'){
+				ganancia = (cantidad>12)?0.05:0.03;
+			} else if(categoria=='Administracion'){
+				ganancia = (cantidad>12)?0.10:0.08;
+			} else if(categoria=='Otros'){
+				ganancia = (cantidad>12)?0.06:0.04;
+			}
+			return ganancia;
+		}
+	}
+</script>
