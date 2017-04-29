@@ -4,6 +4,7 @@
  <meta charset="UTF-8">
 	<title>Proyecto 03</title>
 	<script src="angular.min.js"></script>
+	<script src="servicios.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
@@ -134,8 +135,7 @@
 			var venta = fnProcesar($scope.categoria, $scope.curso, parseInt($scope.cantidad));
 
 			$scope.ventas.push(venta);
-			$scope.fnUpdateResumen(venta);
-
+			$scope.fnUpdateResumen();
 			$scope.categoria = '';
 			$scope.curso	 = '';
 			$scope.cantidad		 = '0';
@@ -151,86 +151,11 @@
 			$scope.verPanel = ($scope.verPanel == 2)?0:2;
 		}
 
-		$scope.fnUpdateResumen = function(venta)
+		$scope.fnUpdateResumen = function()
 		{
-			var filaActual;
-			// Busca la fila con la categoria de la venta actual
-			for (var i = 0; i < $scope.resumen.length; i++)
-			{
-				if($scope.resumen[i].categoria == venta.categoria)
-				{
-					filaActual = $scope.resumen[i];
-					break;
-				}
-			}
-
-			if (!filaActual) { // Si la fila resumen es nueva
-				$scope.resumen.push({
-					categoria	: venta.categoria,
-					cantidad	: venta.cantidad,
-					importe 	: venta.importe,
-					impuesto	: venta.impuesto,
-					total     : venta.total,
-					comision  : venta.comision
-				});
-			} else { // Actualiza la fila resumen
-				filaActual.cantidad		+= venta.cantidad;
-				filaActual.importe	  += venta.importe;
-				filaActual.impuesto 	+= venta.impuesto;
-				filaActual.total    	+= venta.total;
-				filaActual.comision 	+= venta.comision;
-			}
+			$scope.resumen = procResumen($scope.ventas, $scope.categorias);
 		}
 
-		function fnProcesar(categoria, curso, cantidad){
-			// Proceso
-			var precio = fnPrecio(categoria); 
-			var ganancia = fnGanancia(categoria, cantidad);
-			var total = precio * cantidad;
-			var importe = total / 1.18;
-			var impuesto = total - importe;
-			var comision = importe * ganancia;
-			// Reporte
-			var venta = {
-				categoria	: categoria,
-				curso		  : curso,
-				cantidad	: cantidad,
-				precio    : precio,
-				ganancia	: ganancia,
-				total     : total,
-				importe   : importe,
-				impuesto  : impuesto,
-				comision  : comision
-			};
-			return venta;
-		}
-
-		function fnPrecio(categoria){
-			var precio = 0.0;
-			if(categoria=='Programacion'){
-				precio = 800.0;
-			} else if(categoria=='Ofimatica'){
-				precio = 500.00;
-			} else if(categoria=='Administracion'){
-				precio = 1800.00;
-			} else if(categoria=='Otros'){
-				precio = 1000.00;
-			}
-			return precio;
-		}
-
-		function fnGanancia(categoria, cantidad){
-			var ganancia = 0.0;
-			if(categoria=='Programacion'){
-				ganancia = (cantidad>12)?0.07:0.05;
-			} else if(categoria=='Ofimatica'){
-				ganancia = (cantidad>12)?0.05:0.03;
-			} else if(categoria=='Administracion'){
-				ganancia = (cantidad>12)?0.10:0.08;
-			} else if(categoria=='Otros'){
-				ganancia = (cantidad>12)?0.06:0.04;
-			}
-			return ganancia;
-		}
+		
 	}
 </script>
