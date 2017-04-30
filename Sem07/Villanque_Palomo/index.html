@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Examen Parcial</title>
+	<script src="angular.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body ng-app="appConsumo">
+	<div ng-controller="appController" class="container">
+		<h3>Universidad de la Vida</h3>
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Venta de Cursos</div>
+					<div class="panel-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="categoria" class="col-sm-3 control-label">Categoria</label>
+								<div class="col-sm-9">
+									<select ng-model="categoria" id="categoria" class="form-control">
+										<option ng-repeat="cat in categorias" value="{{cat.id}}">{{cat.nombre}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="descripcion" class="col-sm-3 control-label">Descripcion</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="descripcion" id="descripcion" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="participantes" class="col-sm-3 control-label">Participantes</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="participantes" id="participantes" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button ng-click="fnAgregar()" class="btn btn-success">Agregar</button>
+									<button ng-click="fnListado()" class="btn">Listado</button>
+									<button ng-click="fnResumen()" class="btn">Resumen</button>
+								</div>
+							</div>
+							<div class="alert alert-danger" ng-show="errorCategoria == 1">Debe seleccionar una categor&iacute;a!</div>
+							<div class="alert alert-danger" ng-show="errorDescripcion == 1">Debe ingresar una descripci&oacute;n del curso!</div>
+							<div class="alert alert-danger" ng-show="errorCantidad == 1">Debe ingresar la cantidad de participantes!</div>
+						</form>
+					</div>
+					<div class="panel-footer" ng-show="ventas.length > 0 && verPanel == 1">
+						<h4>LISTADO DE VENTAS</h4>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Categoria</th>
+									<th>Curso</th>
+									<th>Precio</th>
+									<th>Cantidad</th>
+									<th>Importe</th>
+									<th>Impuesto</th>
+									<th>Total</th>
+									<th>Comision</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="fila in ventas">
+									<td>{{categorias[fila.categoria - 1].nombre}}</td>
+									<td>{{fila.curso}}</td>
+									<td>{{fila.precio.toFixed(2)}}</td>
+									<td>{{fila.cantidad}}</td>
+									<td>{{fila.importe.toFixed(2)}}</td>
+									<td>{{fila.impuesto.toFixed(2)}}</td>
+									<td>{{fila.total.toFixed(2)}}</td>
+									<td>{{fila.comision.toFixed(2)}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="panel-footer" ng-show="resumen.length > 0 && verPanel == 2">
+						<h4>RESUMEN</h4>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Categoria</th>
+									<th>Cantidad</th>
+									<th>Importe</th>
+									<th>Impuesto</th>
+									<th>Total</th>
+									<th>Comision</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="fila in resumen">
+									<td>{{categorias[fila.categoria - 1].nombre}}</td>
+									<td>{{fila.sumCantidad}}</td>
+									<td>{{fila.sumImporte.toFixed(2)}}</td>
+									<td>{{fila.sumImpuesto.toFixed(2)}}</td>
+									<td>{{fila.sumTotal.toFixed(2)}}</td>
+									<td>{{fila.sumComision.toFixed(2)}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="panel-footer" ng-show="ventas.length > 0 && verVenta == 1">
+						<h4>VENTA AGREGADA</h4>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<td style="width: 35%;"><b>Categoria del curso</b></td>
+									<td>{{categorias[ultimaVenta.categoria].nombre}}</td>
+								</tr>
+								<tr>
+									<td><b>Descripcion del curso</b></td>
+									<td>{{ultimaVenta.curso}}</td>
+								</tr>
+								<tr>
+									<td><b>Precio</b></td>
+									<td>{{ultimaVenta.precio.toFixed(2)}}</td>
+								</tr>
+								<tr>
+									<td><b>Cantidad</b></td>
+									<td>{{ultimaVenta.cantidad}}</td>
+								</tr>
+								<tr>
+									<td><b>Importe</b></td>
+									<td>{{ultimaVenta.importe.toFixed(2)}}</td>
+								</tr>
+								<tr>
+									<td><b>Impuesto</b></td>
+									<td>{{ultimaVenta.impuesto.toFixed(2)}}</td>
+								</tr>
+								<tr>
+									<td><b>Total</b></td>
+									<td>{{ultimaVenta.total.toFixed(2)}}</td>
+								</tr>
+								<tr>
+									<td><b>Comision</b></td>
+									<td>{{ultimaVenta.comision.toFixed(2)}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var app = angular.module('appConsumo', []);
+	app.controller( 'appController', appController );
+	
+	function appController($scope)
+	{
+		// Datos del modelo
+		$scope.categoria 		= 0;
+		$scope.descripcion 		= '';
+		$scope.participantes 	= 0;
+		$scope.categorias		= [
+			{ id : 1, nombre : 'Programacion', precio : 800, ganancia1 : 5, ganancia2 : 7 },
+			{ id : 2, nombre : 'Ofimatica', precio : 500, ganancia1 : 3, ganancia2 : 5 },
+			{ id : 3, nombre : 'Administracion', precio : 1800, ganancia1 : 8, ganancia2 : 10 },
+			{ id : 4, nombre : 'Otros', precio : 1000, ganancia1 : 4, ganancia2 : 6 },
+		];
+		$scope.ventas			= [];
+		$scope.resumen			= [];
+		$scope.verPanel 		= 0;
+		$scope.errorCategoria	= 0;
+		$scope.errorDescripcion	= 0;
+		$scope.errorCantidad	= 0;
+		$scope.errorCantidad	= 0;
+		$scope.verVenta			= 0;
+		$scope.ultimaVenta;
+
+    	// Servicios
+		$scope.fnAgregar = function()
+		{
+			$scope.errorCategoria 	= 0;
+			$scope.errorDescripcion	= 0;
+			$scope.errorCantidad	= 0;
+			$scope.verVenta			= 0;
+
+			if($scope.categoria == 0)
+			{
+				$scope.errorCategoria = 1;
+				return;
+			}
+			if($scope.descripcion == '')
+			{
+				$scope.errorDescripcion = 1;
+				return;
+			}
+			if($scope.participantes == 0 || $scope.participantes == '')
+			{
+				$scope.errorCantidad = 1;
+				return;
+			}
+
+			var detalle		= $scope.getCatData($scope.categoria);
+			var total		= parseInt($scope.participantes) * parseFloat(detalle.p);
+			var importe		= total / 1.18;
+			var impuesto	= total - importe;
+			var pc_comision;
+
+			if(parseInt($scope.participantes) > 12)
+				pc_comision = detalle.g2;
+			else
+				pc_comision = detalle.g1;
+
+			var producto = {
+				categoria	: $scope.categoria,
+				curso		: $scope.descripcion,
+				precio		: parseFloat(detalle.p),
+				cantidad	: parseInt($scope.participantes),
+				importe		: importe,
+				impuesto	: impuesto,
+				total		: total,
+				comision	: (pc_comision * importe) / 100
+			};
+
+			$scope.ventas.push(producto);
+			$scope.fnUpdateResumen(producto);
+			$scope.categoria		= 0;
+			$scope.descripcion		= '';
+			$scope.participantes	= 0;
+			$scope.ultimaVenta		= $scope.ventas[$scope.ventas.length - 1];
+			$scope.verVenta			= 1;
+		}
+
+		$scope.getCatData = function(id)
+		{
+			for(c in $scope.categorias)
+			{
+				if(parseInt(id) == $scope.categorias[c].id)
+					return { p :  $scope.categorias[c].precio, g1 :  $scope.categorias[c].ganancia1, g2 :  $scope.categorias[c].ganancia2 };
+			}
+		}
+
+		$scope.fnListado = function()
+		{
+			 $scope.verPanel = ($scope.verPanel == 1) ? 0 : 1;
+		}
+
+		$scope.fnResumen = function()
+		{
+			$scope.verPanel = ($scope.verPanel == 2) ? 0 : 2;
+		}
+
+		$scope.fnUpdateResumen = function(producto)
+		{
+			var filaActual;
+
+			for (var i = 0; i < $scope.resumen.length; i++)
+			{
+				if($scope.resumen[i].categoria == producto.categoria)
+				{
+					filaActual = $scope.resumen[i];
+					break;
+				}
+			}
+
+			if (!filaActual)
+			{
+				$scope.resumen.push({
+					categoria	: producto.categoria,
+					sumCantidad	: producto.cantidad,
+					sumImporte	: producto.importe,
+					sumImpuesto	: producto.impuesto,
+					sumTotal	: producto.total,
+					sumComision	: producto.comision
+				});
+			}
+			else
+			{
+				filaActual.sumCantidad	+= producto.cantidad;
+				filaActual.sumImporte	+= producto.importe;
+				filaActual.sumImpuesto	+= producto.impuesto;
+				filaActual.sumTotal		+= producto.total;
+				filaActual.sumComision	+= producto.comision;
+			}
+		}
+		
+	}
+</script>

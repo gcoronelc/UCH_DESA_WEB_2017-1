@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Examen Parcial</title>
+	<script src="angular.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body ng-app="myApp">
+	<div ng-controller="myCtr" class="container">
+		<h3>PROYECTO V CICLO-DESARROLLO WEB</h3>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">PROCESOS DE VENTAS</div>
+					<div class="panel-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="categoria" class="col-sm-3 control-label">categoria</label>
+								<div class="col-sm-9">
+									<select ng-model="categoria" id="categoria" class="form-control">
+										<option ng-repeat="fila in listacat" value="{{fila.id}}">{{fila.catdesc}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="descripcion" class="col-sm-3 control-label">descripcion</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="descripcion" id="descripcion" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="participantes" class="col-sm-3 control-label">participantes</label>
+								<div class="col-sm-9">
+									<input type="text" ng-model="participantes" id="participantes" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button ng-click="fnAgregar()" class="btn btn-success">Agregar</button>
+									<button ng-click="fnProcesar()" class="btn">Procesar</button>
+									<button ng-click="fnResumen()" class="btn">Resumen</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="panel-footer" ng-show="cursosvendidos.length > 0 && verPanel == 1">
+						<h2>REPORTE DEL PROCESO  DE CURSOS</h2>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>categoria</th>
+									<th>curso</th>
+									<th>precio</th>
+									<th>cantidad</th>
+									<th>importe</th>
+									<th>impuesto</th>
+									<th>total</th>
+									<th>comision</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="fila in cursosvendidos">
+									<td>{{listacat[fila.categoria - 1].catdesc}}</td>
+									<td>{{fila.curso}}</td>
+									<td>{{fila.precio.toFixed(2)}}</td>
+									<td>{{fila.cantidad}}</td>
+									<td>{{fila.importe.toFixed(2)}}</td>
+									<td>{{fila.impuesto.toFixed(2)}}</td>
+									<td>{{fila.total.toFixed(2)}}</td>
+									<td>{{fila.comision.toFixed(2)}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="panel-footer" ng-show="resumen.length > 0 && verPanel == 2">
+						<h2>RESUMEN DE PROCESO</h2>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>categoria</th>
+									<th>cantidad</th>
+									<th>importe</th>
+									<th>impuesto</th>
+									<th>total</th>
+									<th>comision</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="fila in resumen">
+									<td>{{listacat[fila.categoria - 1].catdesc}}</td>
+									<td>{{fila.sumcant}}</td>
+									<td>{{fila.sumimp.toFixed(2)}}</td>
+									<td>{{fila.sumimpu.toFixed(2)}}</td>
+									<td>{{fila.sumtot.toFixed(2)}}</td>
+									<td>{{fila.sumcomi.toFixed(2)}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var app = angular.module('myApp', []);
+	app.controller( 'myCtr', myCtr );
+	
+	function myCtr($scope)
+	{
+		
+		$scope.listacat	= [
+			{ id : 1, catdesc : 'Programacion', precio : 800, ganancia1 : 5, ganancia2 : 7 },
+			{ id : 2, catdesc : 'Ofimatica', precio : 500, ganancia1 : 3, ganancia2 : 5 },
+			{ id : 3, catdesc : 'Administracion', precio : 1800, ganancia1 : 8, ganancia2 : 10 },
+			{ id : 4, catdesc : 'Otros', precio : 1000, ganancia1 : 4, ganancia2 : 6 },
+		];
+		$scope.resumen	= [];
+		$scope.categoria = 0;
+		$scope.descripcion = '';
+		$scope.participantes = 0;
+		$scope.cursosvendidos	= [];
+		$scope.verPanel = 0;
+    
+		$scope.fnAgregar = function()
+		{
+			var infoTotal = $scope.infoTotal($scope.categoria);
+			var total = parseInt($scope.participantes) * parseFloat(infoTotal.precio);
+			var importe = parseFloat(total / 1.18);
+			var impuesto = total - importe;
+			var comisionporc;
+			if(parseInt($scope.participantes) > 12)
+				comisionporc = infoTotal.ganancia2;
+			else
+				comisionporc = infoTotal.ganancia1;
+
+			var producto = {
+				categoria	: $scope.categoria,
+				curso		: $scope.descripcion,
+				precio		: parseFloat(infoTotal.precio),
+				cantidad	: parseInt($scope.participantes),
+				importe		: importe,
+				impuesto	: impuesto,
+				total		: total,
+				comision	: (comisionporc * importe) / 100
+			};
+
+			$scope.cursosvendidos.push(producto);
+			$scope.fnUpdateResumen(producto);
+			$scope.categoria		= 0;
+			$scope.descripcion		= '';
+			$scope.participantes	= 0;
+		}
+
+		$scope.infoTotal = function(id)
+		{
+			for(fila in $scope.listacat)
+			{
+				if(parseInt(id) == $scope.listacat[fila].id)
+				{
+					var data = {
+						nombre : $scope.listacat[fila].categoria, 
+						precio : $scope.listacat[fila].precio, 
+						ganancia1 : $scope.listacat[fila].ganancia1, 
+						ganancia2 : $scope.listacat[fila].ganancia2
+					}
+					return data;
+				}
+			}
+		}
+
+		$scope.fnProcesar = function()
+		{
+			 $scope.verPanel = ($scope.verPanel == 1) ? 0 : 1;
+		}
+
+		$scope.fnResumen = function()
+		{
+			$scope.verPanel = ($scope.verPanel == 2) ? 0 : 2;
+		}
+
+		$scope.fnUpdateResumen = function(producto)
+		{
+			var filaActual;
+			for (var i = 0; i < $scope.resumen.length; i++)
+			{
+				if($scope.resumen[i].categoria == producto.categoria)
+				{
+					filaActual = $scope.resumen[i];
+					break;
+				}
+			}
+			if (!filaActual)
+			{
+				$scope.resumen.push({
+					categoria	: producto.categoria,
+					sumcant	: producto.cantidad,
+					sumimp	: producto.importe,
+					sumimpu	: producto.impuesto,
+					sumtot	: producto.total,
+					sumcomi	: producto.comision
+				});
+			}
+			else
+			{
+				filaActual.sumcant += producto.cantidad;
+				filaActual.sumimp += producto.importe;
+				filaActual.sumimpu += producto.impuesto;
+				filaActual.sumtot += producto.total;
+				filaActual.sumcomi += producto.comision;
+			}
+		}
+		
+	}
+</script>
