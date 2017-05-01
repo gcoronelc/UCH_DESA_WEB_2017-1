@@ -5,7 +5,7 @@
     Lipa y Trinidad
 	
 3.  Meteor.js
-    Canales y Arroyo
+    Canales y Arroyo - Cambia a JQuery UI
 
 4.  Moment.js
 
@@ -14,10 +14,10 @@
     Villanque, Palomo y Sanchez
 
 6.  Video.js
-	Ordoñez y Calle
+	  Ordoñez y Calle
 	
 7.  Vue.js
-	Zapata y Galarreta
+	  Zapata y Galarreta
 
 8.  Ember
 
@@ -29,6 +29,7 @@
 
 
 11. JQuery UI
+    Canales y Arroyo
 
 
 
