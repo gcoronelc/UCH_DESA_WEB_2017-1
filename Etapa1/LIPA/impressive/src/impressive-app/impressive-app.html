@@ -1,0 +1,75 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html"> <!-- Aquí estamos importando POLYMER, POLYMER a su vez es un componente personalizado que el equipo de POLYMER a creado para utilizar POLYMER, es decir, esto es un CUSTOM ELEMENT para crear OTROS CUSTOM ELEMENTS.
+Esta línea que básicamente está importando es una de las primeras APIS o una de las tecnologías que componen los WebComponents, a esto se le conoce como "HTML Imports", lo que nos permite importar un HTML dentro de otro HTML, y la funcionalidad práctica de esto es que te permite importar los elementos personalizados que otras personas hayan creado o que yo mismo cree y luego los recicle en otras partes de la aplicación. -->
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../impressive-elements/impressive-form.html">
+<link rel="import" href="../impressive-elements/impressive-collection.html">
+<link rel="import" href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+
+
+
+<dom-module id="impressive-app"> <!-- Con la etiqueta "dom-module" se definen los componentes, "impressive-app" es el nombre del componente. -->
+  <template> <!-- La etiqueta "template" es la base de los WebComponents puesto que es donde definimos su comportamiento y los registamos como tal, es decir, esta etiqueta nos permite definir la estructura o el marcado de nuestros propios elementos-->
+    <style include= "iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+      }
+
+      .iron-flex{
+        width: 50%;
+        background-color: white;
+        height: 100px;
+        margin-right: 1em;
+
+      }
+
+    </style>
+
+    <app-localstorage-document key= "impressive.collection" data= "{{collection}}"></app-localstorage-document> <!-- En esta línea estamos haciendo que la información se mantenga aunque se actualice la página porque ahora está sincronizada con el storage local del navegador -->
+    <!-- LocalStorage y sessionStorage son propiedades de HTML5 (web storage), que permiten almacenar datos en nuestro navegador web. De manera muy similar a como lo hacen las cookies. LocalStorage: Guarda información que permanecerá almacenada por tiempo indefinido; sin importar que el navegador se cierre. -->
+    
+    <div class="layout horizontal">
+
+    <impressive-collection class="iron-flex" collection="{{collection}}"></impressive-collection>
+
+    <impressive-form class= "iron-flex" collection="{{collection}}"></impressive-form>
+
+    </div>
+
+
+
+  </template>
+
+
+  <script>
+    Polymer({
+
+      is: 'impressive-app',
+
+      properties: {
+        
+        collection:{
+
+          type:Array,
+          value: function(){return [];},
+          
+        },
+
+      },
+
+      observers: [
+
+            "_collectionChanged(collection.*)"
+      ],
+
+      _collectionChanged: function(){
+        console.log("Desde el observador del host");
+        console.log(this.collection);
+      }
+
+    });
+  </script>
+
+  <!-- La etiqueta CONTENT hace referencia a todo lo que se coloque dentro del componente :v -->
+  <!-- Los "properties" son como su nombre lo indica, propiedades del elemento, una forma práctica de pensar sobre los "properties" es como los atributos, sirven para configurar nuestro elemento. -->
+
+</dom-module>

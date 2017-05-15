@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<!-- el iron-from le da un comportamiento al formulario -->
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-styles/default-theme.html">
+<!-- Los papers sólo se encargan de darle estilos materialize.
+Materialize: es un framework CSS que te permite crear sitios y aplicaciones web con los principios de Material Design(Normativa de diseño) -->
+
+
+
+<dom-module id="impressive-form">
+
+<style>
+	
+	paper-button{
+
+		background-color: var(--accent-color);
+		color: white;
+		margin-left: 0px;
+		margin-top: 1em;
+	}
+
+</style>
+
+<template>
+
+	<form is="iron-form">
+		<paper-input label="Pequeña descripcion..." id="description"></paper-input>
+		<paper-textarea label="Escribe el código aquí... :v" id="textarea" rows="5"></paper-textarea>
+		<paper-input label="Lenguaje de programacion..." id="language"></paper-input>
+
+		<paper-button raised on-tap = "addSnippet">Guardar Snippet de código</paper-button>
+
+		
+
+	</form>
+	
+
+</template>
+
+<script>
+	
+	Polymer({
+
+		is:"impressive-form",
+
+		properties: {
+        
+        	collection:{
+
+          		type:Array,
+          		notify: true
+        	}
+
+      	},
+
+      	addSnippet: function(){
+
+      		var codeObj = {
+      			description: this.$.description.value,
+      			code: this.$.textarea.value,
+      			lang: this.$.language.value
+      		};
+
+      		this.push("collection",codeObj);
+      		console.log("Desde el form");
+      		console.log(this.collection);
+      	}
+
+	})
+
+</script>
+
+</dom-module>
