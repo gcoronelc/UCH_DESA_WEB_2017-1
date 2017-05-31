@@ -1,0 +1,62 @@
+<h1><i class="fa fa-user"></i> Alumno</h1>
+<h4>Alumno: {{ alumno.nombre }}</h4>
+<hr/>
+
+<div class="row">
+<form class="form-horizontal" role="form" ng-submit="guardarAlumno()">
+  
+  <div ng-hide="creando">
+     <div class="form-group">
+      <label for="codigo" class="col-lg-2 control-label">Código</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="codigo"
+               placeholder="Código" ng-model="alumno.codigo" readonly="readonly" />
+      </div>
+    </div>     
+  </div>
+
+  <div class="form-group">
+    <label for="nombre" class="col-lg-2 control-label">Nombre</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="nombre"
+             placeholder="Nombre" ng-model="alumno.nombre" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="telefono" class="col-lg-2 control-label">Teléfono</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="telefono"
+             placeholder="Telefono" ng-model="alumno.telefono" required 
+             ui-mask="9999-9999" ui-mask-placeholder ui-mask-placeholder-char="_" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="direccion" class="col-lg-2 control-label">Dirección</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="direccion"
+             placeholder="Dirección" ng-model="alumno.direccion" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <button type="submit" class="btn btn-default">
+        <i class="fa fa-floppy-o"></i>
+        Guardar Cambios
+      </button>
+    </div>
+  </div>
+
+</form>
+
+<div class="alert alert-info" ng-show="actualizado">
+  <strong>Info!</strong> {{mensaje}}.
+</div>
+
+<div class="alert alert-danger" ng-show="hayError">
+  <strong>Danger!</strong> {{mensaje}}.
+</div>
+
+</div>
