@@ -13,9 +13,9 @@ class Database{
 
 	private $_connection;
 	private $_host = "localhost";
-	private $_user = "eureka";
+	private $_user = "educa";
 	private $_pass = "admin";
-	private $_db   = "univer_db";
+	private $_db   = "educa";
 
 
 	// Almacenar una unica instancia

@@ -1,0 +1,35 @@
+<h1>
+	<i class="fa fa-address-card" aria-hidden="true"></i>
+	Clientes
+</h1>
+
+<div>
+	<h2>Mantenimiento de Clientes</h2>
+	<form ng-submit="consultar()">
+		<label>Criterio</label><br/>
+		<input type="type" ng-model="criterio">
+		<input type="submit" value="Consultar">
+	</form>
+
+
+
+	<table class="table table-striped">
+    
+      <tr>
+        <th>CODIGO</th>
+        <th>PATERNO</th>
+        <th>MATERNO</th>
+        <th>NOMBRE</th>
+      </tr>
+
+      <tr ng-repeat="cliente in clientes">
+      	<th>{{ cliente.codigo }}</th>
+        <th>{{ cliente.paterno }}</th>
+        <th>{{ cliente.materno }}</th>
+        <th>{{ cliente.nombre }}</th>
+      </tr>
+
+
+  </table>
+
+</div>
