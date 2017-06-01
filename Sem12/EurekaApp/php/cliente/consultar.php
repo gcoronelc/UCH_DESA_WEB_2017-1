@@ -4,7 +4,15 @@
 require '../db/AccesoDB.php';
 
 // Datos
-$criterio = $_GET["criterio"];
+$paterno = $_GET["paterno"] . "%";
+$materno = $_GET["materno"] . "%";
+$nombre  = $_GET["nombre"]  . "%";
+
+/*
+echo "Paterno: $paterno<br>";
+echo "Materno: $materno<br>";
+echo "Nombre: $nombre<br>";
+*/
 
 // Proceso
 $criterio = "%$criterio%";
@@ -20,11 +28,13 @@ $sql = "select
 		vch_clietelefono   telefono,
 		vch_clieemail      email 
 		from cliente 
-		where vch_cliepaterno   like :criterio 
-		or vch_cliematerno   like :criterio 
-        or vch_clienombre    like :criterio ";
+		where vch_cliepaterno  like :paterno 
+		and   vch_cliematerno  like :materno 
+    and   vch_clienombre   like :nombre ";
 $stm = $pdo->prepare($sql);
-$stm->bindParam(':criterio',$criterio,PDO::PARAM_STR); 
+$stm->bindParam(':paterno',$paterno,PDO::PARAM_STR);
+$stm->bindParam(':materno',$materno,PDO::PARAM_STR);
+$stm->bindParam(':nombre',$nombre,PDO::PARAM_STR);
 $stm->execute();
 $lista = $stm->fetchAll();
 
