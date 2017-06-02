@@ -8,7 +8,6 @@ app.controller('clientesCtrl', ['$scope','$http',
   $scope.clientes = {};
 
   $scope.consultar = function(){
-    //var ruta = "php/cliente/consultar.php?criterio=" + $scope.criterio;
     var ruta = "php/cliente/consultar.php";
     $http.get( ruta, {params:$scope.criterio} )
     .then(function(response){

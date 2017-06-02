@@ -1,10 +1,9 @@
 <?php
 
 // =====================================================
-// Consulta de Clientes
+// Consulta de Empleados en función a apellido 
+// paterno, apellido materno, y nombre del empleado.
 // =====================================================
-
- 
 
 // Libreria
 require '../db/AccesoDB.php';
@@ -17,19 +16,16 @@ $nombre  = $_GET["nombre"]  . "%";
 // Proceso
 $pdo = AccesoDB::getConnection();
 $sql = "select
-		chr_cliecodigo     codigo,
-		vch_cliepaterno    paterno,
-		vch_cliematerno    materno,
-		vch_clienombre     nombre,
-		chr_cliedni        dni,
-		vch_clieciudad     ciudad,
-		vch_cliedireccion  direccion,
-		vch_clietelefono   telefono,
-		vch_clieemail      email 
-		from cliente 
-		where vch_cliepaterno  like :paterno 
-		and   vch_cliematerno  like :materno 
-    and   vch_clienombre   like :nombre ";
+    chr_emplcodigo       codigo,   
+    vch_emplpaterno      paterno,
+    vch_emplmaterno      materno,
+    vch_emplnombre       nombre,
+    vch_emplciudad       ciudad,
+    vch_empldireccion    direccion
+    from empleado 
+    where vch_emplpaterno  like :paterno 
+    and   vch_emplmaterno  like :materno 
+    and   vch_emplnombre   like :nombre ";
 $stm = $pdo->prepare($sql);
 $stm->bindParam(':paterno',$paterno,PDO::PARAM_STR);
 $stm->bindParam(':materno',$materno,PDO::PARAM_STR);
@@ -37,9 +33,12 @@ $stm->bindParam(':nombre',$nombre,PDO::PARAM_STR);
 $stm->execute();
 $lista = $stm->fetchAll();
 
+//print_r($lista);
+//echo "<br/>----------<br/>";
+
 // Reporte
 $textoJSON = json_encode($lista);
-header('Content-Type: application/json;');
-print_r($textoJSON);
+header('Content-Type: application/json;'); 
+echo($textoJSON);
 
 ?>

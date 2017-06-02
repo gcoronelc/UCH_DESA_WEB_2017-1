@@ -14,6 +14,10 @@ app.config( function($routeProvider){
 			templateUrl: 'page/empleados.html',
 			controller:  'empleadosCtrl'
 		})
+		.when('/empleado/:codigo',{
+			templateUrl: 'page/empleado.html',
+			controller: 'empleadoCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
