@@ -1,0 +1,86 @@
+<h1>
+  <i class="fa fa-user" aria-hidden="true"></i>
+  Empleado: {{ empleado.nombre }} {{ empleado.paterno }} {{ empleado.materno }}
+</h1>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">{{accion}} Empleado</div>
+  <div class="panel-body">
+
+      <form class="form-horizontal" role="form" ng-submit="procesar()">
+
+        <div class="form-group" ng-hide="creando">
+          <label for="codigo" class="col-lg-2 control-label">Código</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="codigo"
+                   placeholder="Código" ng-model="empleado.codigo" readonly="readonly" />
+          </div>
+        </div>     
+
+        <div class="form-group">
+          <label for="nombre" class="col-lg-2 control-label">Apellido paterno</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="nombre"
+                   placeholder="Apellido paterno" ng-model="empleado.paterno" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre" class="col-lg-2 control-label">Apellido materno</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="nombre"
+                   placeholder="Apellido materno" ng-model="empleado.materno" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre" class="col-lg-2 control-label">Nombre</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="nombre"
+                   placeholder="Nombre" ng-model="empleado.nombre" required />
+          </div>
+        </div>   
+
+        <div class="form-group">
+          <label for="nombre" class="col-lg-2 control-label">Ciudad</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="ciudad"
+                   placeholder="Ciudad" ng-model="empleado.ciudad" required />
+          </div>
+        </div> 
+
+        <div class="form-group">
+          <label for="nombre" class="col-lg-2 control-label">Dirección</label>
+          <div class="col-lg-10">
+            <input type="text" class="form-control" id="direccion"
+                   placeholder="Dirección" ng-model="empleado.direccion" required />
+          </div>
+        </div>   
+
+        <div class="btn-toolbar col-lg-12" align="center">
+
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-floppy-o"></i> Grabar
+          </button>
+
+          <button type="button" class="btn btn-primary" ng-click="eliminar()">
+            <i class="fa fa-trash"></i> Eliminar
+          </button>
+        
+        </div>      
+
+      </form>
+
+  </div>
+
+</div>
+
+
+<div class="alert alert-info" ng-show="sinError">
+  <strong>Info!</strong> {{mensaje}}
+</div>
+
+<div class="alert alert-danger" ng-show="hayError">
+  <strong>Danger!</strong> {{mensaje}}
+</div>

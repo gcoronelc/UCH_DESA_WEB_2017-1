@@ -1,0 +1,73 @@
+<h1>
+	<i class="fa fa-users" aria-hidden="true"></i>
+	Empleados
+</h1>
+
+<h2>Mantenimiento de Empleados</h2>
+
+<!-- Formulario de criterios de busqueda -->
+
+<div class="panel panel-primary">
+  <div class="panel-heading">CRITERIO DE BUSQUEDA</div>
+  <div class="panel-body">
+    <form ng-submit="consultar()">
+
+      <div class="form-group">
+        <div class="col-sm-2">
+          <input ng-model="criterio.paterno" type="text" class="form-control" placeholder="Paterno">
+        </div>
+        <div class="col-sm-2">
+          <input ng-model="criterio.materno" type="text" class="form-control" placeholder="Materno">
+        </div>
+        <div class="col-sm-2">
+          <input ng-model="criterio.nombre" type="text" class="form-control" placeholder="Nombre">
+        </div>
+        <div class="col-sm-1">
+          <button type="submit" class="btn btn-primary">Consultar</button>
+        </div>
+        <div class="col-sm-2">
+          <a href="#!/empleado/nuevo" class="btn btn-primary">
+            <i class="fa fa-user-plus"></i>
+            Nuevo empleado
+          </a>
+        </div>
+      </div>
+
+    </form>      
+  </div>
+</div>
+
+<!-- Resultado de la busqueda -->
+
+<div class="panel panel-primary" ng-show="mostrar">
+  <div class="panel-heading">RESULTADO</div>
+
+  <div class="panel-body">
+    <table class="table table-bordered">
+
+        <thead>
+          <tr>
+            <th>CODIGO</th>
+            <th>PATERNO</th>
+            <th>MATERNO</th>
+            <th>NOMBRE</th>
+            <th>ACCION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="empleado in empleados">
+            <td> {{ empleado.codigo }}  </td>
+            <td> {{ empleado.paterno }} </td>
+            <td> {{ empleado.materno }} </td>
+            <td> {{ empleado.nombre }}  </td>
+            <td><a href="#!/empleado/{{empleado.codigo}}">Editar</a>  </td>
+          </tr>
+        </tbody>
+
+    </table>
+  </div>
+<div>
+
+
+

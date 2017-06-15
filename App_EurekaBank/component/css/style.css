@@ -1,0 +1,64 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 03-jun-2017, 22:21:47
+    Author     : Miguel
+*/
+
+nav{
+    background:#3667B5;
+}
+
+.flotante {
+    display:scroll;
+    position:fixed;
+    bottom:20px;
+    right:20px;
+}
+table.highlight > tbody > tr:hover {
+    background-color: #c3d2ea !important;
+}
+.btn_cliente{
+    border-top: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.2em 0;
+    outline: none;
+    background: transparent;
+}
+.btn:focus, .btn-large:focus, .btn-floating:focus{
+    background-color: #1a4486;
+}
+.btn, .btn-large{
+    background-color: #3667B5;
+}
+.btn:hover, .btn-large:hover{
+    background-color: #3667B5;
+}
+.btn_cliente:focus{
+    background-color: transparent;
+}
+
+input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom: 1px solid #3667B5;
+    box-shadow: 0 1px 0 0 #3667B5;
+}
+input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label{
+    color: #3667B5;
+}
+.large-Modal .modal-dialog{
+    height: 400px;
+    width:400px; 
+    margin: auto;
+    position: absolute;
+    top:0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
